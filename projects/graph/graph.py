@@ -15,7 +15,8 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        self.vertices[vertex_id] = set()
+        if vertex_id not in self.vertices:
+            self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
         """
@@ -169,7 +170,7 @@ class Graph:
                 # if vertex is equal to target value
                 if vertex == destination_vertex:
                     # return path
-                   return path
+                    return path
                 # mark vertex as visited
                 visited.add(vertex)
                 # loop over next vertex in the set of vertices for the current vertex
@@ -289,10 +290,3 @@ if __name__ == '__main__':
     '''
     print(graph.dfs(1, 6))
     print(graph.dfs_recursive(1, 6))
-    print(graph.get_neighbors(1))
-    # print(graph.get_neighbors(2))
-    # print(graph.get_neighbors(3))
-    # print(graph.get_neighbors(4))
-    # print(graph.get_neighbors(5))
-    # print(graph.get_neighbors(6))
-    # print(graph.get_neighbors(7))
