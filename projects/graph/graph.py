@@ -184,7 +184,7 @@ class Graph:
         # return None if it breaks out of the while loop
         return None
 
-    def dfs_recursive(self, starting_vertex, destination_vertex):
+    def dfs_recursive(self, starting_vertex, destination_vertex, visited=set(), path=[]):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -192,34 +192,15 @@ class Graph:
 
         This should be done using recursion.
         """
-        # create an empty stack and push a list containing the starting vertex
-        stack = Stack()
-        stack.push([starting_vertex])
-        # create a set to store the visited vertices
-        visited = set()
-        # while the stack is not empty
-        while not stack.is_empty():
-            # pop to the path
-            path = stack.pop()
-            # set a vertex to the last item in the path
-            vertex = path[-1]
-            # if that vertex has not been visited
+        visited.add(starting_vertex)
+        path = path + [starting_vertex]
+        if starting_vertex == destination_vertex:
+            return path
+        for vertex in self.vertices[starting_vertex]:
             if vertex not in visited:
-                # if vertex is equal to target value
-                if vertex == destination_vertex:
-                    # return path
-                    return path
-                # mark vertex as visited
-                visited.add(vertex)
-                # loop over next vertex in the set of vertices for the current vertex
-                for next_vertex in self.vertices[vertex]:
-                    # set a new path equal to a new list of the path
-                    new_path = list(path)
-                    # append next vertex to new path
-                    new_path.append(next_vertex)
-                    # push the new path
-                    stack.push(new_path)
-        # return None if it breaks out of the while loop
+                new_path = self.dfs_recursive(vertex, destination_vertex, visited, path)
+                if new_path is not None:
+                    return new_path
         return None
 
 
